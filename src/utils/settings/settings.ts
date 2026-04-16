@@ -300,6 +300,17 @@ export function getRelativeSettingsFilePathForSource(
 ): string {
   switch (source) {
     case 'projectSettings':
+      return join('.alfred', 'settings.json')
+    case 'localSettings':
+      return join('.alfred', 'settings.local.json')
+  }
+}
+
+function getLegacyRelativeSettingsFilePathForSource(
+  source: 'projectSettings' | 'localSettings',
+): string {
+  switch (source) {
+    case 'projectSettings':
       return join('.openclaude', 'settings.json')
     case 'localSettings':
       return join('.openclaude', 'settings.local.json')
@@ -345,9 +356,20 @@ function getSettingsForSourceUncached(
   }
 
   const settingsFilePath = getSettingsFilePathForSource(source)
-  const { settings: fileSettings } = settingsFilePath
+  let { settings: fileSettings } = settingsFilePath
     ? parseSettingsFile(settingsFilePath)
     : { settings: null }
+
+  if (
+    !fileSettings &&
+    (source === 'projectSettings' || source === 'localSettings')
+  ) {
+    const legacySettingsFilePath = join(
+      getSettingsRootPathForSource(source),
+      getLegacyRelativeSettingsFilePathForSource(source),
+    )
+    fileSettings = parseSettingsFile(legacySettingsFilePath).settings
+  }
 
   // For flagSettings, merge in any inline settings set via the SDK
   if (source === 'flagSettings') {

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:/Users/Admin/Desktop/alfred2/openclaude/alfred\" grep -l -i \"openclaude\")",
+      "Bash(git -C \"C:/Users/Admin/Desktop/alfred2/openclaude/alfred\" grep -n \"\\\\.openclaude\\\\|openclaude-profile\\\\|openclaude\\\\.proto\\\\|package openclaude\\\\.v1\\\\|OPENCLAUDE_\\\\|openclaude-vscode\" -- . \":\\(exclude\\)dist/**\")"
+    ]
+  }
+}

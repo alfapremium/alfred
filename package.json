@@ -1,11 +1,11 @@
 {
   "name": "alfred-openclaude",
   "version": "0.3.0",
-  "description": "Alfred on OpenClaude — one CLI for OpenAI, Codex OAuth, OpenRouter, Gemini, Ollama, and more",
+  "description": "Alfred — one CLI for OpenAI, Codex OAuth, OpenRouter, Gemini, Ollama, and more",
   "type": "module",
   "bin": {
+    "alfred": "./bin/alfred",
     "openclaude": "./bin/openclaude",
-    "alfred": "./bin/openclaude",
     "openclaw": "./bin/openclaude"
   },
   "files": [

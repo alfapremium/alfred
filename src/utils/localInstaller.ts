@@ -38,20 +38,21 @@ export function getCandidateLocalInstallDirs(options?: {
 
 function getCandidateLocalBinaryPaths(localInstallDir: string): string[] {
   return [
-    join(localInstallDir, 'node_modules', '.bin', 'openclaude'),
+    join(localInstallDir, 'node_modules', '.bin', 'alfred'),
     join(localInstallDir, 'node_modules', '.bin', 'claude'),
   ]
 }
 
 export function isManagedLocalInstallationPath(execPath: string): boolean {
   return (
+    execPath.includes('/.alfred/local/node_modules/') ||
     execPath.includes('/.openclaude/local/node_modules/') ||
     execPath.includes('/.claude/local/node_modules/')
   )
 }
 
 export function getLocalClaudePath(): string {
-  return join(getLocalInstallDir(), 'openclaude')
+  return join(getLocalInstallDir(), 'alfred')
 }
 
 /**
@@ -94,7 +95,7 @@ export async function ensureLocalPackageEnvironment(): Promise<boolean> {
     await writeIfMissing(
       join(localInstallDir, 'package.json'),
       jsonStringify(
-        { name: 'openclaude-local', version: '0.0.1', private: true },
+        { name: 'alfred-local', version: '0.0.1', private: true },
         null,
         2,
       ),
@@ -104,7 +105,7 @@ export async function ensureLocalPackageEnvironment(): Promise<boolean> {
     const wrapperPath = getLocalClaudePath()
     const created = await writeIfMissing(
       wrapperPath,
-      `#!/bin/sh\nexec "${localInstallDir}/node_modules/.bin/openclaude" "$@"`,
+      `#!/bin/sh\nexec "${localInstallDir}/node_modules/.bin/alfred" "$@"`,
       0o755,
     )
     if (created) {

@@ -30,7 +30,8 @@ export {
   sanitizeProviderConfigValue,
 } from './providerSecrets.js'
 
-export const PROFILE_FILE_NAME = '.openclaude-profile.json'
+export const PROFILE_FILE_NAME = '.alfred-profile.json'
+export const LEGACY_PROFILE_FILE_NAME = '.openclaude-profile.json'
 export const DEFAULT_GEMINI_BASE_URL =
   'https://generativelanguage.googleapis.com/v1beta/openai'
 export const DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash'
@@ -133,6 +134,15 @@ function resolveProfileFilePath(options?: ProfileFileLocation): string {
   }
 
   return resolve(options?.cwd ?? process.cwd(), PROFILE_FILE_NAME)
+}
+
+function resolveExistingProfileFilePath(options?: ProfileFileLocation): string {
+  const filePath = resolveProfileFilePath(options)
+  if (existsSync(filePath) || options?.filePath) {
+    return filePath
+  }
+
+  return resolve(options?.cwd ?? process.cwd(), LEGACY_PROFILE_FILE_NAME)
 }
 
 export function isProviderProfile(value: unknown): value is ProviderProfile {
@@ -447,7 +457,7 @@ export function clearPersistedCodexOAuthProfile(
 }
 
 export function loadProfileFile(options?: ProfileFileLocation): ProfileFile | null {
-  const filePath = resolveProfileFilePath(options)
+  const filePath = resolveExistingProfileFilePath(options)
   if (!existsSync(filePath)) {
     return null
   }
@@ -486,6 +496,11 @@ export function saveProfileFile(
 export function deleteProfileFile(options?: ProfileFileLocation): string {
   const filePath = resolveProfileFilePath(options)
   rmSync(filePath, { force: true })
+  if (!options?.filePath) {
+    rmSync(resolve(options?.cwd ?? process.cwd(), LEGACY_PROFILE_FILE_NAME), {
+      force: true,
+    })
+  }
   return filePath
 }
 

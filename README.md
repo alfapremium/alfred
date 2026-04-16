@@ -1,10 +1,10 @@
-# Alfred / OpenClaude
+# Alfred
 
-Alfred (OpenClaude) is a terminal-first AI coding agent CLI that unifies cloud and local model providers. It provides a single developer workflow for prompts, tools, agents, tasks, streaming output, and model-specific onboarding.
+Alfred is a terminal-first AI coding agent CLI that unifies cloud and local model providers. It provides a single developer workflow for prompts, tools, agents, tasks, streaming output, and model-specific onboarding.
 
 ## What This Project Is
 
-This repository contains the `alfred-openclaude` CLI implementation, including:
+This repository contains the Alfred CLI implementation, including:
 
 - a cross-provider command-line runtime
 - provider onboarding and profile management
@@ -12,7 +12,7 @@ This repository contains the `alfred-openclaude` CLI implementation, including:
 - optional VS Code extension support
 - headless gRPC server support for automation and integration
 
-The repo is not currently published as `alfred-openclaude` on npm, so install locally from this repository instead of using `npm install -g alfred-openclaude`.
+The repo is not currently published as an Alfred npm package, so install locally from this repository instead of using `npm install -g alfred-openclaude`.
 
 ## Features
 
@@ -67,13 +67,13 @@ openclaw
 Start provider onboarding from within the CLI:
 
 ```powershell
-openclaude onboard
+alfred onboard
 ```
 
 For GitHub Models onboarding:
 
 ```powershell
-openclaude onboard-github
+alfred onboard-github
 ```
 
 You can also run provider setup directly:
@@ -88,7 +88,7 @@ You can also run provider setup directly:
 $env:CLAUDE_CODE_USE_OPENAI = "1"
 $env:OPENAI_API_KEY = "sk-your-key-here"
 $env:OPENAI_MODEL = "gpt-4o"
-openclaude
+alfred
 ```
 
 ### Fastest Local Ollama Setup
@@ -97,25 +97,25 @@ openclaude
 $env:CLAUDE_CODE_USE_OPENAI = "1"
 $env:OPENAI_BASE_URL = "http://localhost:11434/v1"
 $env:OPENAI_MODEL = "qwen2.5-coder:7b"
-openclaude
+alfred
 ```
 
 ## Useful Commands
 
-- `bun run build` — build the CLI
-- `bun run dev` — build and run locally
-- `bun test` — run tests
-- `bun run smoke` — verify build and CLI startup
-- `bun run test:coverage` — generate coverage
+- `bun run build` ï¿½ build the CLI
+- `bun run dev` ï¿½ build and run locally
+- `bun test` ï¿½ run tests
+- `bun run smoke` ï¿½ verify build and CLI startup
+- `bun run test:coverage` ï¿½ generate coverage
 
 ## Repository Structure
 
-- `src/` — core CLI and runtime source
-- `scripts/` — build, launch, and maintenance scripts
-- `docs/` — setup and project documentation
-- `python/` — Python helpers and tests
-- `vscode-extension/openclaude-vscode/` — VS Code extension sources
-- `bin/` — CLI launcher scripts
+- `src/` ï¿½ core CLI and runtime source
+- `scripts/` ï¿½ build, launch, and maintenance scripts
+- `docs/` ï¿½ setup and project documentation
+- `python/` ï¿½ Python helpers and tests
+- `vscode-extension/openclaude-vscode/` ï¿½ VS Code extension sources
+- `bin/` ï¿½ CLI launcher scripts
 
 ## Notes
 

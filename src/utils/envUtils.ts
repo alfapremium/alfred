@@ -14,20 +14,28 @@ export function resolveClaudeConfigHomeDir(options?: {
   }
 
   const homeDir = options?.homeDir ?? homedir()
+  const alfredDir = join(homeDir, '.alfred')
   const openClaudeDir = join(homeDir, '.openclaude')
   const legacyClaudeDir = join(homeDir, '.claude')
+  const alfredExists = existsSync(alfredDir)
   const openClaudeExists =
     options?.openClaudeExists ?? existsSync(openClaudeDir)
   const legacyClaudeExists =
     options?.legacyClaudeExists ?? existsSync(legacyClaudeDir)
 
-  // Preserve existing user config/install state until we ship an explicit
-  // migration. New installs (neither path exists) use ~/.openclaude.
-  if (!openClaudeExists && legacyClaudeExists) {
+  if (alfredExists) {
+    return alfredDir.normalize('NFC')
+  }
+
+  if (openClaudeExists) {
+    return openClaudeDir.normalize('NFC')
+  }
+
+  if (legacyClaudeExists) {
     return legacyClaudeDir.normalize('NFC')
   }
 
-  return openClaudeDir.normalize('NFC')
+  return alfredDir.normalize('NFC')
 }
 
 // Memoized: 150+ callers, many on hot paths. Keyed off CLAUDE_CONFIG_DIR so
